@@ -30,7 +30,7 @@
   </test-fixture>
 
   <script type="module">
-    import {ComboBoxPlaceholder} from '@vaadin/vaadin-combo-box/src/vaadin-combo-box-placeholder.js';
+    import {ComboBoxPlaceholder} from '@vaadin/combo-box/src/vaadin-combo-box-placeholder.js';
     import {} from '@polymer/polymer/lib/utils/flush.js';
 
     describe('Multiselect combo box tests', () => {
@@ -91,7 +91,7 @@
           // then
           expect(multiselectComboBox.hasValue).to.be.false;
           expect(multiselectComboBox.title).to.be.empty;
-          expect(multiselectComboBox.$.comboBox.$.overlay._selectedItem).to.be.empty;
+          expect(multiselectComboBox.$.comboBox.$.dropdown._selectedItem).to.be.empty;
         });
 
         it('should set `hasValue` to `true`', () => {
@@ -104,7 +104,7 @@
           // then
           expect(multiselectComboBox.hasValue).to.be.true;
           expect(multiselectComboBox.title).to.be.empty;
-          expect(multiselectComboBox.$.comboBox.$.overlay._selectedItem).to.be.empty;
+          expect(multiselectComboBox.$.comboBox.$.dropdown._selectedItem).to.be.empty;
         });
 
         it('should sort the selected items', () => {
@@ -198,7 +198,7 @@
           // then
           expect(multiselectComboBox.hasValue).to.be.true;
           expect(multiselectComboBox.title).to.be.eql('item 2, item 1');
-          expect(multiselectComboBox.$.comboBox.$.overlay._selectedItem).to.be.empty;
+          expect(multiselectComboBox.$.comboBox.$.dropdown._selectedItem).to.be.empty;
         });
 
         it('should preserve custom title if not in compact mode', () => {

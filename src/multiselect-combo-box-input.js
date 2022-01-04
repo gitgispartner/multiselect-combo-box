@@ -1,8 +1,8 @@
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {html} from '@polymer/polymer/lib/utils/html-tag.js';
+import {PolymerElement} from '@polymer/polymer/polymer-element.js';
+import '@vaadin/text-field/src/vaadin-text-field.js';
 import {ThemableMixin} from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 import {ThemePropertyMixin} from '@vaadin/vaadin-themable-mixin/vaadin-theme-property-mixin.js';
-import '@vaadin/vaadin-text-field/src/vaadin-text-field.js';
 import {MultiselectComboBoxMixin} from './multiselect-combo-box-mixin.js';
 
 {
@@ -14,23 +14,30 @@ import {MultiselectComboBoxMixin} from './multiselect-combo-box-mixin.js';
    * @demo demo/index.html
    * @appliesMixin MultiselectComboBoxMixin
    */
-  class MultiselectComboBoxInput extends
-    ThemePropertyMixin(
-      ThemableMixin(
-        MultiselectComboBoxMixin(PolymerElement))) {
-
+  class MultiselectComboBoxInput extends ThemePropertyMixin(
+    ThemableMixin(MultiselectComboBoxMixin(PolymerElement))
+  ) {
     static get template() {
       return html`
         <div id="tokens" part="tokens" slot="prefix">
           <template is="dom-if" if="[[compactMode]]" restamp="">
-            <div part="compact-mode-label">[[_getCompactModeLabel(items, compactModeLabelGenerator, items.*)]]</div>
+            <div part="compact-mode-label">
+              [[_getCompactModeLabel(items, compactModeLabelGenerator,
+              items.*)]]
+            </div>
           </template>
 
           <template is="dom-if" if="[[!compactMode]]" restamp="">
             <template is="dom-repeat" items="[[items]]">
               <div part="token">
-                <div part="token-label">[[_getItemLabel(item, itemLabelPath)]]</div>
-                <div part="token-remove-button" role="button" on-click="_removeToken"></div>
+                <div part="token-label">
+                  [[_getItemLabel(item, itemLabelPath)]]
+                </div>
+                <div
+                  part="token-remove-button"
+                  role="button"
+                  on-click="_removeToken"
+                ></div>
               </div>
             </template>
           </template>
@@ -42,22 +49,27 @@ import {MultiselectComboBoxMixin} from './multiselect-combo-box-mixin.js';
             value="{{value}}"
             placeholder="[[placeholder]]"
             on-keydown="_onKeyDown"
-            multiselect-has-value\$="[[hasValue]]"
-            multiselect-has-label\$="[[hasLabel]]"
-            compact-mode\$="[[compactMode]]"
-            theme\$="[[theme]]"
-            disabled="[[disabled]]">
-
+            multiselect-has-value$="[[hasValue]]"
+            multiselect-has-label$="[[hasLabel]]"
+            compact-mode$="[[compactMode]]"
+            theme$="[[theme]]"
+            disabled="[[disabled]]"
+          >
             <div
               id="clearButton"
               part="clear-button"
               slot="suffix"
               role="button"
               on-click="_removeAll"
-              hidden\$="[[!clearButtonVisible]]">
-            </div>
+              hidden$="[[!clearButtonVisible]]"
+            ></div>
 
-            <div id="toggleButton" part="toggle-button" slot="suffix" role="button"></div>
+            <div
+              id="toggleButton"
+              part="toggle-button"
+              slot="suffix"
+              role="button"
+            ></div>
           </vaadin-text-field>
         </div>
       `;
@@ -75,8 +87,8 @@ import {MultiselectComboBoxMixin} from './multiselect-combo-box-mixin.js';
         value: {
           type: String,
           value: '',
-          notify: true
-        }
+          notify: true,
+        },
       };
     }
 
@@ -86,27 +98,35 @@ import {MultiselectComboBoxMixin} from './multiselect-combo-box-mixin.js';
     }
 
     _onKeyDown(event) {
-      if (event.keyCode === 8 && this.items.length && this.$.inputField.value === '') {
+      if (
+        event.keyCode === 8 &&
+        this.items.length &&
+        this.$.inputField.value === ''
+      ) {
         this._removeSelected(this.items[this.items.length - 1]);
       }
     }
 
     _removeSelected(item) {
-      this.dispatchEvent(new CustomEvent('item-removed', {
-        composed: true,
-        bubbles: true,
-        detail: {
-          item: item
-        }
-      }));
+      this.dispatchEvent(
+        new CustomEvent('item-removed', {
+          composed: true,
+          bubbles: true,
+          detail: {
+            item: item,
+          },
+        })
+      );
     }
 
     _removeAll(event) {
       event.stopPropagation();
-      this.dispatchEvent(new CustomEvent('remove-all-items', {
-        composed: true,
-        bubbles: true
-      }));
+      this.dispatchEvent(
+        new CustomEvent('remove-all-items', {
+          composed: true,
+          bubbles: true,
+        })
+      );
     }
   }
 

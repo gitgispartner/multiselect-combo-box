@@ -1,11 +1,11 @@
 import { PolymerElement } from '@polymer/polymer';
-import { ComboBoxRenderer } from '@vaadin/vaadin-combo-box';
-import { ControlStateMixin } from '@vaadin/vaadin-control-state-mixin';
+import { ComboBoxRenderer } from '@vaadin/combo-box';
+import { ShadowFocusMixin } from '@vaadin/field-base';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { ThemePropertyMixin } from '@vaadin/vaadin-themable-mixin/vaadin-theme-property-mixin';
 import { MultiselectComboBoxMixin } from './multiselect-combo-box-mixin';
 
-declare class MultiselectComboBoxElement<T = unknown> extends ControlStateMixin(
+declare class MultiselectComboBoxElement<T = unknown> extends ShadowFocusMixin(
   ThemePropertyMixin(ThemableMixin(MultiselectComboBoxMixin(PolymerElement))),
 ) {
   readonly is: string;

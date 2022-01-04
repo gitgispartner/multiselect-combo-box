@@ -1,15 +1,16 @@
 import {PolymerElement} from '@polymer/polymer/polymer-element.js';
 import {html} from '@polymer/polymer/lib/utils/html-tag.js';
-import {ControlStateMixin} from '@vaadin/vaadin-control-state-mixin/vaadin-control-state-mixin.js';
+// import {ControlStateMixin } from '@vaadin/vaadin-control-state-mixin/vaadin-control-state-mixin.js';
+import {ShadowFocusMixin} from '@vaadin/field-base';
 import {ThemableMixin} from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 import {ThemePropertyMixin} from '@vaadin/vaadin-themable-mixin/vaadin-theme-property-mixin.js';
-import {ComboBoxPlaceholder} from '@vaadin/vaadin-combo-box/src/vaadin-combo-box-placeholder.js';
+import {ComboBoxPlaceholder} from '@vaadin/combo-box/src/vaadin-combo-box-placeholder.js';
 import {FlattenedNodesObserver} from '@polymer/polymer/lib/utils/flattened-nodes-observer.js';
 import {mixinBehaviors} from '@polymer/polymer/lib/legacy/class.js';
 import {IronResizableBehavior} from '@polymer/iron-resizable-behavior/iron-resizable-behavior.js';
 import {MultiselectComboBoxMixin} from './multiselect-combo-box-mixin.js';
 
-import '@vaadin/vaadin-combo-box/src/vaadin-combo-box-light.js';
+import '@vaadin/combo-box/src/vaadin-combo-box-light.js';
 import './multiselect-combo-box-input.js';
 
 {
@@ -24,7 +25,7 @@ import './multiselect-combo-box-input.js';
    * @appliesMixin MultiselectComboBoxMixin
    */
   class MultiselectComboBox extends
-    ControlStateMixin(
+    ShadowFocusMixin(
       ThemePropertyMixin(
         ThemableMixin(
           MultiselectComboBoxMixin(mixinBehaviors([IronResizableBehavior], PolymerElement))))) {
@@ -143,11 +144,11 @@ import './multiselect-combo-box-input.js';
       super.ready();
 
       // replace listener to modify default behavior
-      this.$.comboBox.$.overlay.removeEventListener('selection-changed', this.$.comboBox._boundOverlaySelectedItemChanged);
-      this.$.comboBox.$.overlay.addEventListener('selection-changed', this._boundCustomOverlaySelectedItemChanged);
+      this.$.comboBox.$.dropdown.removeEventListener('selection-changed', this.$.comboBox._boundOverlaySelectedItemChanged);
+      this.$.comboBox.$.dropdown.addEventListener('selection-changed', this._boundCustomOverlaySelectedItemChanged);
 
       // modify check to allow custom renderers
-      this.$.comboBox.$.overlay._isItemSelected = this._customIsSelected.bind(this);
+      this.$.comboBox.$.dropdown._isItemSelected = this._customIsSelected.bind(this);
 
       this._observer = new FlattenedNodesObserver(this, (info) => {
         this._setTemplateFromNodes(info.addedNodes);
@@ -333,7 +334,7 @@ import './multiselect-combo-box-input.js';
       this.compactMode && (this.title = this._getDisplayValue(selectedItems, this.itemLabelPath, ', '));
 
       // manually force a render
-      this.$.comboBox.$.overlay._selectedItem = {};
+      this.$.comboBox.$.dropdown._selectedItem = {};
 
       setTimeout(() => this._notifyResizeIfNeeded(), 0);
     }

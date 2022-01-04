@@ -5,15 +5,14 @@
     "node": true,
     "es6": true
   },
-  "plugins": [
-    "html"
-  ],
+  "plugins": ["html"],
   "globals": {
     "Polymer": false,
     "Vaadin": false,
     "MultiselectComboBoxMixin": false
   },
   "rules": {
+    "linebreak-style": ["error", "windows"],
     "quotes": [
       "error",
       "single",
